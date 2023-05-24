@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.post("/registration", validateMiddlewareReg, RegController.regUser);
+router.post("/register", validateMiddlewareReg, RegController.regUser);
 
 router.post("/login", validateMiddlewareLogin, LoginController.loginUser);
 
