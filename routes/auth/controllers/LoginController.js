@@ -4,7 +4,7 @@ import AuthService from "../AuthService.js";
 class LoginController {
   async loginUser(req, res) {
     try {
-      const user =await UserService.getUserByEmail(req.body.email);
+      const user = await UserService.getUserByEmail(req.body.email);
       if (!user) {
         return res.status(404).json({ message: "User doesn't exist" });
       }
@@ -14,7 +14,7 @@ class LoginController {
       );
       if (validate) {
         const date_log = new Date().toISOString().slice(0, 10);
-        const token = AuthService.createAccessToken(user.email);
+        const token = AuthService.createToken(user.email);
         return res.status(200).json({
           user: {
             id: user.id,

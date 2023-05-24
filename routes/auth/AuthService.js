@@ -23,7 +23,7 @@ class AuthService {
   async validateUser(passwordBD, password) {
     return bcrypt.compareSync(passwordBD, password);
   }
-  createAccessToken(email) {
+  createToken(email) {
     return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: "1h" });
   }
 }
