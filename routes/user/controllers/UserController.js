@@ -15,10 +15,21 @@ class UserController {
   }
   async removeUser(req, res) {
     try {
-      const user = await UserService.removeUser(req.params.id)
-      return res.status(200).json(user)
+      const user = await UserService.removeUser(req.params.id);
+      return res.status(200).json(user);
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: "Server error" });
     }
-    catch (e) {
+  }
+  async changeStatus(req, res) {
+    try {
+      const user = await UserService.getUserById(req.id);
+      console.log("USER",user);
+      user.status = user.status == "active" ? "blocked" : "active";
+      user.save();
+      return res.status(200).json({ message: "Status was changed" });
+    } catch (e) {
       console.log(e);
       res.status(500).json({ message: "Server error" });
     }

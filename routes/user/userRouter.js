@@ -8,4 +8,6 @@ router.get("/users", authMiddleware, UserController.getUsers);
 
 router.delete(`/user/:id`, authMiddleware, UserController.removeUser);
 
+router.patch(`/user/:id`, authMiddleware, UserController.changeStatus)
+
 export default router;
