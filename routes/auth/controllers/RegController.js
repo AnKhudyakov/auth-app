@@ -8,10 +8,9 @@ class RegController {
       const result = validationResult(req);
       if (result.isEmpty()) {
         const isExist = await UserService.getUserByEmail(req.body.email);
-        console.log(isExist);
         if (isExist) {
           return res
-            .status(400)
+            .status(401)
             .json({ message: `User with this email already exists` });
         }
         const hashPassword = AuthService.hashPassword(req.body.password)
@@ -23,7 +22,7 @@ class RegController {
         .json({ message: "Incorrect request", errors: result });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Server error" });
+      return res.status(500).json({ message: "Server error" });
     }
   }
 }

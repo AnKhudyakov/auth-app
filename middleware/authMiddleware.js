@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import UserService from "../routes/user/UserService.js";
 
-export const authMiddleware = (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   if (req.method === "OPTIONS") {
     return next();
   }
@@ -13,10 +14,14 @@ export const authMiddleware = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    req._id = decoded.id
+    const user = await UserService.getUserByEmail(decoded.id);
+    if (!user) {
+      return res.status(401).json({ message: "User unauthenticated" });
+    }
+    req.email = decoded.id;
     next();
   } catch (e) {
     console.log(e);
-    res.status(401).json({ message: "User unauthenticated" });
+    return res.status(401).json({ message: "User unauthenticated" });
   }
 };

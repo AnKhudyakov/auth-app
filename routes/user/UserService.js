@@ -5,7 +5,7 @@ class UserService {
     return await User.findOne({ email });
   }
   async getUserById(id) {
-    return await User.findOne({ id });
+    return await User.findOne({ _id: id });
   }
   async getAllUsers() {
     return await User.find({}).select({ password: 0 });

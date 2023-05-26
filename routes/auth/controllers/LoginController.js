@@ -30,7 +30,7 @@ class LoginController {
       return res.status(400).json({ message: "Invalid email or password" });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Server error" });
+      return res.status(500).json({ message: "Server error" });
     }
   }
 }

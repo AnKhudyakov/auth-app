@@ -10,7 +10,7 @@ class UserController {
       return res.status(200).json(users);
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Server error" });
+      return res.status(500).json({ message: "Server error" });
     }
   }
   async removeUser(req, res) {
@@ -19,19 +19,29 @@ class UserController {
       return res.status(200).json(user);
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Server error" });
+      return res.status(500).json({ message: "Server error" });
     }
   }
-  async changeStatus(req, res) {
+  async blockUser(req, res) {
     try {
-      const user = await UserService.getUserById(req.id);
-      console.log("USER",user);
-      user.status = user.status == "active" ? "blocked" : "active";
+      const user = await UserService.getUserById(req.params.id);
+      user.status = "blocked";
       user.save();
       return res.status(200).json({ message: "Status was changed" });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: "Server error" });
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+  async unblockUser(req, res) {
+    try {
+      const user = await UserService.getUserById(req.params.id);
+      user.status = "active";
+      user.save();
+      return res.status(200).json({ message: "Status was changed" });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ message: "Server error" });
     }
   }
 }
