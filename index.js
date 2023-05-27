@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:8080"],
+    origin: ["http://localhost:3000", "http://localhost:8080", process.env.CLIENT_URL],
   })
 );
 app.use(express.json());
